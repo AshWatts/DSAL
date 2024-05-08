@@ -17,7 +17,7 @@ public:
         rollNumber = 0;
         name = "";
         division = "";
-    
+		address = "";
     }
 
 	void addStudent() 
