@@ -21,23 +21,22 @@ public:
     }
 
 	void addStudent() 
-    {
-		Student student;
+	{
+		Student s;
 		cout << "Enter Roll Number: ";
-		cin >> student.rollNumber;
-		cin.ignore(); // Ignore the newline character in the input buffer
+		cin >> s.rollNumber;
 		cout << "Enter Name: ";
-		getline(cin, student.name);
+		cin>>s.name;
 		cout << "Enter Division: ";
-		getline(cin, student.division);
+		cin>>s.division;
 		cout << "Enter Address: ";
-		getline(cin, student.address);
+		cin>>s.address;
 
-		ofstream outFile("student_info.dat", ios::app);
-		outFile << student.rollNumber << endl;
-		outFile << student.name << endl;
-		outFile << student.division << endl;
-		outFile << student.address << endl;
+		ofstream outFile("student_info.txt", ios::app);
+		outFile << s.rollNumber << endl;
+		outFile << s.name << endl;
+		outFile << s.division << endl;
+		outFile << s.address << endl;
 
 		cout << "Student information added successfully." << endl;
 		outFile.close();
