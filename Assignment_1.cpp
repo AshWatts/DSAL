@@ -117,7 +117,7 @@ int main()
     root->right->left = new node(5);
     root->right->right = new node(6);
 
-    class operations op;
+    operations op;
     cout<<"Preorder traversal of binary tree is : ";
     op.preorder(root);
     cout<<endl;

@@ -42,30 +42,34 @@ public:
 		outFile.close();
 	}
 
-	void deleteStudent() {
+	void deleteStudent() 
+	{
 		int rollNumber;
 		cout << "Enter Roll Number of the student to delete: ";
 		cin >> rollNumber;
 
-		ifstream inFile("student_info.dat");
-		ofstream tempFile("temp.dat");
+		ifstream inFile("student_info.txt");
+		ofstream tempFile("temp.txt");
 
 		int currentRollNumber;
 		bool found = false;
 
-		while (inFile >> currentRollNumber) {
+		while (inFile >> currentRollNumber) 
+		{
 			string name, division, address;
-			inFile.ignore(); // Ignore the newline character in the input buffer
-			getline(inFile, name);
-			getline(inFile, division);
-			getline(inFile, address);
+			cin >> name;
+			cin >> division;
+			cin >> address;
 
-			if (currentRollNumber != rollNumber) {
+			if (currentRollNumber != rollNumber) 
+			{
 				tempFile << currentRollNumber << endl;
 				tempFile << name << endl;
 				tempFile << division << endl;
 				tempFile << address << endl;
-			} else {
+			} 
+			else 
+			{
 				found = true;
 			}
 		}
@@ -73,8 +77,8 @@ public:
 		inFile.close();
 		tempFile.close();
 
-		remove("student_info.dat");
-		rename("temp.dat", "student_info.dat");
+		remove("student_info.txt");
+		rename("temp.txt", "student_info.txt");
 
 		if (found) {
 			cout << "Student information deleted successfully." << endl;
@@ -84,24 +88,26 @@ public:
 		}
 	}
 
-	void displayStudent() {
+	void displayStudent() 
+	{
 		int rollNumber;
 		cout << "Enter Roll Number of the student to display: ";
 		cin >> rollNumber;
 
-		ifstream inFile("student_info.dat");
+		ifstream inFile("student_info.txt");
 
 		int currentRollNumber;
 		bool found = false;
 
-		while (inFile >> currentRollNumber) {
+		while (inFile >> currentRollNumber) 
+		{
 			string name, division, address;
-			inFile.ignore();
-			getline(inFile, name);
-			getline(inFile, division);
-			getline(inFile, address);
+			cin >> name;
+			cin >> division;
+			cin >> address;
 
-			if (currentRollNumber == rollNumber) {
+			if (currentRollNumber == rollNumber) 
+			{
 				cout << "Roll Number: " << currentRollNumber << endl;
 				cout << "Name: " << name << endl;
 				cout << "Division: " << division << endl;
@@ -113,13 +119,15 @@ public:
 
 		inFile.close();
 
-		if (!found) {
+		if (!found) 
+		{
 			cout << "Student not found." << endl;
 		}
 	}
 };
 
-int main() {
+int main() 
+{
 	int choice;
 	Student s;
 	do 
@@ -145,7 +153,7 @@ int main() {
 				s.displayStudent();
 				break;
 			case 4:
-				remove("student_info.dat");
+				remove("student_info.txt");
 				cout<<"file removed";
 				break;
 			case 5:
