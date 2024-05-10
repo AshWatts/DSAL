@@ -161,4 +161,5 @@ int main()
 	cout<<"Maximum Value Element : ";
 	b.max(root);
 	cout<<endl;
+	return 0;
 }
