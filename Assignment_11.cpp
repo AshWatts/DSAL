@@ -21,7 +21,7 @@ public:
     }
 
 	void addStudent() 
-	{
+	{ 
 		Student s;
 		cout << "Enter Roll Number: ";
 		cin >> s.rollNumber;

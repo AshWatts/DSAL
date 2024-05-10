@@ -19,6 +19,23 @@ class operations
 {
 public:
 
+void swapSubtrees(node *temp)
+{
+    if(temp == NULL)
+    {
+        return;
+    }
+    
+    // Swap the left and right subtrees
+    node *tempNode = temp->left;
+    temp->left = temp->right;
+    temp->right = tempNode;
+    
+    // Recursively swap the subtrees of left and right children
+    swapSubtrees(temp->left);
+    swapSubtrees(temp->right);
+}
+
     void preorder(node *temp)
     {
         if(temp==NULL)
@@ -134,5 +151,9 @@ int main()
     cout<<"Number of internal nodes in binary tree is : "<<op.countInternalNodes(root);
     cout<<endl;
     cout<<"Height of binary tree is : "<<op.height(root);
+    cout<<endl;
+    cout<<"Inorder traversal of binary tree after swapping is : ";
+    op.swapSubtrees(root);
+    op.inorder(root);
     cout<<endl;
 }
