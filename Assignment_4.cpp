@@ -6,13 +6,15 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Record{
+class Record
+{
 public:
 	char name[10];
 	long int Telephone;
 };
 
-class HashTable{
+class HashTable
+{
 private:
 	Record HT1[10];
 	Record HT2[10];
@@ -29,30 +31,36 @@ public:
 		}
 	}
 	//without replacement
-	void create_HT1(){
+	void create_HT1()
+    {
 		int ASCII;
 		char Name[10];
 		long int tele;
 		bool check=false;
 		int index;
-		for(int i=0; i<TableSize; i++){
+		for(int i=0; i<TableSize; i++)
+        {
 			ASCII =0;
 			cout<<"Enter name of client: ";
 			cin>>Name;
 			cout<<"Enter telephone number of client: ";
 			cin>>tele;
-			for(int j=0; Name[j]!='\0'; j++){
+			for(int j=0; Name[j]!='\0'; j++)
+            {
 				ASCII=ASCII + Name[j];
 			}
 			index=ASCII %TableSize;
 			check=false;
-			while(check!= true){
-				if(HT1[index].Telephone==0){
+			while(check!= true)
+            {
+				if(HT1[index].Telephone==0)
+                {
 					strcpy(HT1[index].name, Name);
 					HT1[index].Telephone=tele;
 					check=true;
 				}
-				else{
+				else
+                {
 					while(HT1[index].Telephone !=0)
 						index=(index+1)%TableSize;
 				}
@@ -60,49 +68,61 @@ public:
 		}
 	}
 	//with replacement
-	void create_HT2(){
+	void create_HT2()
+    {
         int ASCII;
         int index1;
         int index2;
         char Name[10];
         long int tele;
         bool check;
-        for(int i=0; i<TableSize;i++){
+        for(int i=0; i<TableSize;i++)
+        {
             ASCII=0;
             cout<<"Enter name of client: ";
             cin>>Name;
             cout<<"Enter telephone number of client: ";
             cin>>tele;
-            for(int j=0; Name[j]!='\0';j++){
+            for(int j=0; Name[j]!='\0';j++)
+            {
                 ASCII =ASCII + Name[j];
             }
             index1= ASCII % TableSize;
-            if(HT2[index1].Telephone==0){
+            if(HT2[index1].Telephone==0)
+            {
                 strcpy(HT2[index1].name, Name);
                 HT2[index1].Telephone=tele;
                 //display(); //display
             }
-            else{
+            else
+            {
                 ASCII=0;
-                for(int j=0; HT2[index1].name[j]!='\0';j++){
+                for(int j=0; HT2[index1].name[j]!='\0';j++)
+                {
                     ASCII=ASCII +HT2[index1].name[j];
                 }
                 index2=ASCII % TableSize;
-                if(index1==index2){
+                if(index1==index2)
+                {
                     check=false;
-                    while(check==false){
-                        if(HT2[index1].Telephone==0){
+                    while(check==false)
+                    {
+                        if(HT2[index1].Telephone==0)
+                        {
                             strcpy(HT2[index1].name, Name);
                             HT2[index1].Telephone=tele;
                             check=true;
                             //display(); //display
                         }
-                        else{
+                        else
+                        {
                             while(HT2[index1].Telephone!=0)
                                 index1=(index1 +1)%TableSize;
                         }
                     }
-                }else{
+                }
+                else
+                {
                     //temporary retrieval of past client
                     char temp_name[10];
                     long int temp_tele=HT2[index1].Telephone;
@@ -113,13 +133,15 @@ public:
                     //finding next suitable place for new client
                     check=false;
                     while(check==false){
-                        if(HT2[index1].Telephone==0){
+                        if(HT2[index1].Telephone==0)
+                        {
                             strcpy(HT2[index1].name, temp_name);
                             HT2[index1].Telephone=temp_tele;
                             check=true;
                             //display(); //display
                         }
-                        else{
+                        else
+                        {
                             while(HT2[index1].Telephone !=0)
                                 index1=(index1 +1)%TableSize;
                         }
@@ -129,7 +151,8 @@ public:
         }
 	}
 	//display common for both hash tables
-	void display(){
+	void display()
+    {
         cout<<"Which Table do you want to display? [Enter 0 for HT1 OR 1 for HT2] :";
         int key;
         cin>>key;
