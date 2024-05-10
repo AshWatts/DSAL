@@ -14,6 +14,25 @@ class Node
 class BST
 {
 public:
+Node *create(Node *temp)
+{
+	Node *newnode;
+	newnode = new Node;
+	cout<<"Enter Root Value : ";
+	cin>>newnode->data;
+	newnode->left=NULL;
+	newnode->right=NULL;
+	if(temp==NULL)
+	{
+		temp=newnode;
+	}
+	else
+	{
+		cout<<"Root is already present!";
+	}
+	return temp;
+}
+
 	
 void insert(Node *temp, Node *newnode)
 {
