@@ -1,284 +1,202 @@
-/*	Consider telephone book database of N clients. Make use of a hash
-	table implementation to quickly look up client’s telephone number.
-	Make use of two collision handling techniques and compare them using
-	number of comparisons required to find a set of telephone numbers
-	(Note: Use linear probing with replacement and without replacement) 	*/
-#include <bits/stdc++.h>
+/*
+Consider telephone book database of N clients. Make use of a hash table
+implementation to quickly look up client‘s telephone number. Make use
+of two collision handling techniques and compare them using number of
+comparisons required to find a set of telephone numbers (Note: Use linear
+probing with replacement and without replacement)
+*/
+
+#include<bits/stdc++.h>
 using namespace std;
 
-class Record
+
+class HashFunction
 {
+    typedef struct hash
+    {
+    long key;
+    char name[10];
+    }hash;
+hash h[10];
 public:
-	char name[10];
-	long int Telephone;
+HashFunction();
+void insert();
+void display();
+int find(long);
+void Delete(long);
 };
 
-class HashTable
+
+HashFunction::HashFunction()
 {
-private:
-	Record HT1[10];
-	Record HT2[10];
-	int TableSize=10;
-public:
-	HashTable (){
-		for(int i=0; i< TableSize; i++){
-			HT1[i].Telephone=0;
-			strcpy(HT1[i].name, "--");
-		}
-		for(int i=0; i< TableSize; i++){
-			HT2[i].Telephone=0;
-			strcpy(HT2[i].name, "--");
-		}
-	}
-	//without replacement
-	void create_HT1()
+    int i;
+    for(i=0;i<10;i++)
     {
-		int ASCII;
-		char Name[10];
-		long int tele;
-		bool check=false;
-		int index;
-		for(int i=0; i<TableSize; i++)
-        {
-			ASCII =0;
-			cout<<"Enter name of client: ";
-			cin>>Name;
-			cout<<"Enter telephone number of client: ";
-			cin>>tele;
-			for(int j=0; Name[j]!='\0'; j++)
-            {
-				ASCII=ASCII + Name[j];
-			}
-			index=ASCII %TableSize;
-			check=false;
-			while(check!= true)
-            {
-				if(HT1[index].Telephone==0)
-                {
-					strcpy(HT1[index].name, Name);
-					HT1[index].Telephone=tele;
-					check=true;
-				}
-				else
-                {
-					while(HT1[index].Telephone !=0)
-						index=(index+1)%TableSize;
-				}
-			}
-		}
-	}
-	//with replacement
-	void create_HT2()
+        h[i].key=-1;
+        strcpy(h[i].name,"NULL");
+    }
+}
+
+
+void HashFunction::Delete(long k)
+{
+    int index=find(k);
+    if(index==-1)
     {
-        int ASCII;
-        int index1;
-        int index2;
-        char Name[10];
-        long int tele;
-        bool check;
-        for(int i=0; i<TableSize;i++)
+        cout<<"\n\tKey Not Found";
+    }
+    else
+    {
+        h[index].key=-1;
+        strcpy(h[index].name,"NULL");
+        cout<<"\n\tKey is Deleted";
+    }
+}
+
+
+int HashFunction::find(long k)
+{
+    int i;
+    for(i=0;i<10;i++)
+    {
+        if(h[i].key==k)
         {
-            ASCII=0;
-            cout<<"Enter name of client: ";
-            cin>>Name;
-            cout<<"Enter telephone number of client: ";
-            cin>>tele;
-            for(int j=0; Name[j]!='\0';j++)
+            cout<<"\n\t"<<h[i].key<<" is Found at "<<i<<" Location With Name "<<h[i].name;
+            return i;
+        }
+    }
+    if(i==10)
+    {
+        return -1;
+    }
+    return 0;
+}
+
+
+void HashFunction::display()
+{
+    int i;
+    cout<<"\n\t\tKey\t\tName";
+    for(i=0;i<10;i++)
+    {
+        cout<<"\n\th["<<i<<"]\t"<<h[i].key<<"\t\t"<<h[i].name;
+    }
+}
+
+
+void HashFunction::insert()
+{
+    char ans,n[10],ntemp[10];
+    long k,temp;
+    int v,hi,cnt=0,flag=0,i;
+
+    do
+    {
+        if(cnt>=10)
+        {
+            cout<<"\n\tHash Table is FULL";
+            break;
+        }
+        cout<<"\n\tEnter a Telephone No: ";
+        cin>>k;
+        cout<<"\n\tEnter a Client Name: ";
+        cin>>n;
+        hi=k%10;// hash function
+        if(h[hi].key==-1)
+        {
+            h[hi].key=k;
+            strcpy(h[hi].name,n);
+        }
+        else
+        {
+            if(h[hi].key%10!=hi)
             {
-                ASCII =ASCII + Name[j];
-            }
-            index1= ASCII % TableSize;
-            if(HT2[index1].Telephone==0)
-            {
-                strcpy(HT2[index1].name, Name);
-                HT2[index1].Telephone=tele;
-                //display(); //display
+                temp=h[hi].key;
+                strcpy(ntemp,h[hi].name);
+                h[hi].key=k;
+                strcpy(h[hi].name,n);
+                for(i=hi+1;i<10;i++)
+                {
+                    if(h[i].key==-1)
+                    {
+                        h[i].key=temp;
+                        strcpy(h[i].name,ntemp);
+                        flag=1;
+                        break;
+                    }
+                }
+                for(i=0;i<hi && flag==0;i++)
+                {
+                    if(h[i].key==-1)
+                    {
+                        h[i].key=temp;
+                        strcpy(h[i].name,ntemp);
+                        break;
+                    }
+                }
             }
             else
             {
-                ASCII=0;
-                for(int j=0; HT2[index1].name[j]!='\0';j++)
+                for(i=hi+1;i<10;i++)
                 {
-                    ASCII=ASCII +HT2[index1].name[j];
-                }
-                index2=ASCII % TableSize;
-                if(index1==index2)
-                {
-                    check=false;
-                    while(check==false)
+                    if(h[i].key==-1)
                     {
-                        if(HT2[index1].Telephone==0)
-                        {
-                            strcpy(HT2[index1].name, Name);
-                            HT2[index1].Telephone=tele;
-                            check=true;
-                            //display(); //display
-                        }
-                        else
-                        {
-                            while(HT2[index1].Telephone!=0)
-                                index1=(index1 +1)%TableSize;
-                        }
+                        h[i].key=k;
+                        strcpy(h[i].name,n);
+                        flag=1;
+                        break;
                     }
                 }
-                else
+                for(i=0;i<hi && flag==0;i++)
                 {
-                    //temporary retrieval of past client
-                    char temp_name[10];
-                    long int temp_tele=HT2[index1].Telephone;
-                    strcpy(temp_name, HT2[index1].name);
-                    //placing new client at its correct position
-                    strcpy(HT2[index1].name, Name);
-                    HT2[index1].Telephone=tele;
-                    //finding next suitable place for new client
-                    check=false;
-                    while(check==false){
-                        if(HT2[index1].Telephone==0)
-                        {
-                            strcpy(HT2[index1].name, temp_name);
-                            HT2[index1].Telephone=temp_tele;
-                            check=true;
-                            //display(); //display
-                        }
-                        else
-                        {
-                            while(HT2[index1].Telephone !=0)
-                                index1=(index1 +1)%TableSize;
-                        }
+                    if(h[i].key==-1)
+                    {
+                        h[i].key=k;
+                        strcpy(h[i].name,n);
+                        break;
                     }
                 }
-            }
+            }  
         }
-	}
-	//display common for both hash tables
-	void display()
+        flag=0;
+        cnt++;
+        cout<<"\n\tDo You Want to Insert More Keys? (y/n) : ";
+        cin>>ans;
+    }while(ans=='y'||ans=='Y');
+}
+
+int main()
+{
+long k;
+int ch,index;
+char ans;
+HashFunction obj;
+do
+{
+    cout<<"\n\tTelephone (ADT)";
+    cout<<"\n\t1. Insert\n\t2. Display\n\t3. Find\n\t4. Delete\n";
+    cout<<"\n\tEnter Your Choice : ";
+    cin>>ch;
+    switch(ch)
     {
-        cout<<"Which Table do you want to display? [Enter 0 for HT1 OR 1 for HT2] :";
-        int key;
-        cin>>key;
-        if(key==0){
-            cout.width(15);
-            cout.fill(' ');
-            cout.setf(ios::left, ios::adjustfield);
-            cout<<"Name";
-            cout.width(15);cout.width(15);
-            cout.fill(' ');
-            cout.setf(ios::left, ios::adjustfield);
-            cout<<"Telephone"<<endl;
-            for(int i=0; i<TableSize; i++){
-                cout.width(15);
-                cout.fill(' ');
-                cout.setf(ios::left, ios::adjustfield);
-                cout<<HT1[i].name;
-                cout.width(15);
-                cout.fill(' ');
-                cout.setf(ios::left, ios::adjustfield);
-                cout<<HT1[i].Telephone<<endl;
-		}
+        case 1:  obj.insert();
+        break;
+        case 2: obj.display();
+        break;
+        case 3: cout<<"\n\tEnter a Key Which You Want to Search: ";
+        cin>>k;
+        index=obj.find(k);
+        if(index==-1)
+        {
+            cout<<"\n\tKey Not Found";
         }
-        else{
-            cout.width(15);
-            cout.fill(' ');
-            cout.setf(ios::left, ios::adjustfield);
-            cout<<"Name";
-            cout.width(15);cout.width(15);
-            cout.fill(' ');
-            cout.setf(ios::left, ios::adjustfield);
-            cout<<"Telephone"<<endl;
-            for(int i=0; i<TableSize; i++){
-                cout.width(15);
-                cout.fill(' ');
-                cout.setf(ios::left, ios::adjustfield);
-                cout<<HT2[i].name;
-                cout.width(15);
-                cout.fill(' ');
-                cout.setf(ios::left, ios::adjustfield);
-                cout<<HT2[i].Telephone<<endl;
-        }
-        }
-	}
-	//search common for both Hash Tables
-	void search_HT(){
-        cout<<"Which Table do you want to search in? [Enter 0 for HT1 OR 1 for HT2] :";
-        int key;
-        cin>>key;
-        if(key==0){
-                char Name[10];
-                cout<<"Enter name you want to search: ";
-                cin>>Name;
-                bool check=false;
-                int cnt=0;
-                int index;
-                int ASCII=0;
-                for(int j=0; Name[j]!='\0'; j++){
-				ASCII=ASCII + Name[j];
-                }
-                index=ASCII %TableSize;
-                while( check==false && cnt<TableSize){
-                    if(strcmp(HT1[index].name, Name)==0){
-                        check=true;
-                        cout<<"Telephone: "<<HT1[index].Telephone<<endl;
-                        cout<<index<<endl;
-                    }
-                    else{
-                        index=(index +1)%TableSize;
-                        cout<<index<<endl;
-                        cnt++;
-                    }
-                }
-                if(check == false){
-                    cout<<"The client does not exist in the directory..."<<endl;
-                }
-                cout<<"Number of comparisons are: "<<cnt+1<<endl;
-        }
-        else{
-            char Name[10];
-                cout<<"Enter name you want to search: ";
-                cin>>Name;
-                bool check=false;
-                int cnt=0;
-                int index;
-                int ASCII=0;
-                for(int j=0; Name[j]!='\0'; j++){
-				ASCII=ASCII + Name[j];
-                }
-                index=ASCII %TableSize;
-                while( check==false && cnt<TableSize){
-                    if(strcmp(HT2[index].name, Name)==0){
-                        check=true;
-                        cout<<"Telephone: "<<HT2[index].Telephone<<endl;
-                        cout<<index<<endl;
-                    }
-                    else{
-                        index=(index +1)%TableSize;
-                        cout<<index<<endl;
-                        cnt++;
-                    }
-                }
-                if(check == false){
-                    cout<<"The client does not exist in the directory..."<<endl;
-                }
-                cout<<"Number of comparisons are: "<<cnt+1<<endl;
-        }
-	}
-};
-int main() {
-	HashTable H1;
-	H1.create_HT1();
-	H1.display();
-	H1.create_HT2();
-	H1.display();
-	H1.search_HT();
-	H1.search_HT();
-	H1.search_HT();
-	H1.search_HT();
-	H1.search_HT();
-	H1.search_HT();
-	H1.search_HT();
-	H1.search_HT();
-	H1.search_HT();
-	H1.search_HT();
-	H1.search_HT();
-	H1.search_HT();
-	return 0;
+        break;
+        case 4: cout<<"\n\tEnter a Key Which You Want to Delete: ";
+        cin>>k;
+        obj.Delete(k);
+        break;
+    }
+    cout<<"\n\tDo You Want to Continue in Main Menu? (y/n) : ";
+    cin>>ans;
+    }while(ans=='y'|| ans=='Y');
 }
