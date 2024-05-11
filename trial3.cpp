@@ -4,7 +4,8 @@
 #include <iostream>
 using namespace std;
 
-class Node{
+class Node
+{
 public:
     int data;
     Node* left;
@@ -13,7 +14,8 @@ public:
     bool r_thread;
 };
 
-class BST_threaded{
+class BST_threaded
+{
 private:
     Node* Root;
 public:

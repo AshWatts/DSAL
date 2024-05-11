@@ -13,7 +13,8 @@ public:
     bool r_thread;
 };
 
-class BST_threaded{
+class BST_threaded
+{
 private:
     Node* Root;
 public:
