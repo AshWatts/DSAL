@@ -11,9 +11,15 @@ using namespace std;
  
 class Node
 {
-    int key=0;
-    string value="";
-    Node *next=NULL;
+    int key;
+    string value;
+    Node *next;
+    Node()
+    {
+        key=0;
+        value="";
+        next=NULL;
+    }
     friend class Dict;
 };
  

@@ -16,18 +16,7 @@ public:
 
 class BST_threaded
 {
-private:
-    Node* Root;
-public:
-    void create_root(int data){
-        Root=new Node;
-        Root->data=data;
-        Root->l_thread= false;
-        Root->r_thread=false;
-        Root->left=NULL;
-        Root->right=NULL;
-        cout<<"Root created successfully !!"<< endl;
-    }
+    public:
     void insert_node(Node* root, Node* Newnode){
         if(Newnode->data < root->data){
             if(root->left==NULL || root->l_thread ==true){
@@ -55,17 +44,7 @@ public:
                 insert_node(root->right,Newnode);
         }
     }
-    void insertion(int cnt){
-        Node* newnode;
-        for(int i=0; i< cnt; i++){
-            newnode= new Node;
-            cout<<"Enter data of new node: ";
-            cin>>newnode->data;
-            insert_node(Root, newnode);
-            cout<<"Node no. "<<i<<"  created!"<<endl;
-        }
-    }
-    void inorder_display(){
+    void inorder_display(Node *Root){
         Node* current=Root;
         cout<<"The inorder traversal is: "<<endl;
         while(current->left)
@@ -83,7 +62,7 @@ public:
         cout<<current->data<<endl;
         //cout<<"The inorder traversal has been completed..."<<endl;
     }
-    void preorder_display(){
+    void preorder_display(Node *Root){
     	Node* current=Root;
     	cout<<"The preorder traversal is: "<<endl;
     	cout<<Root->data<<endl;
@@ -103,7 +82,7 @@ public:
     	}
     	//cout<<"The preorder traversal is complete..."<<endl;
     }
-    void deletion(){
+    void deletion(Node *Root){
     	cout<<"Enter node to be deleted: ";
     	int key;
     	cin>>key;
@@ -198,20 +177,24 @@ public:
 int main()
 {
     BST_threaded T1;
-    T1.create_root(0);
-    T1.insertion(11);
-    T1.inorder_display();
-    T1.preorder_display();
-    T1.deletion();
-    T1.preorder_display();
-    T1.deletion();
-    T1.preorder_display();
-    T1.deletion();
-    T1.preorder_display();
-    T1.deletion();
-    T1.preorder_display();
-    T1.deletion();
-    T1.preorder_display();
+    Node *root;
+    cout<<"Enter root data : ";
+    cin>>root->data;
+    root->left==NULL;
+    root->right=NULL;
+    root->l_thread=false;
+    root->r_thread=false;
+    int count;
+    cout<<"Enter number of nodes to insert : ";
+    cin>>count;
+    for(int i=0;i<count;i++)
+    {
+        Node *newnode;
+        newnode = new Node;
+        cout<<"Enter Data: ";
+        cin>>newnode->data;
+        T1.insert_node(root,newnode);
+    }
     cout<<"Exhaust";
     return 0;
 }

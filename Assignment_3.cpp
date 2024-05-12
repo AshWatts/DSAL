@@ -4,7 +4,8 @@
 #include <iostream>
 using namespace std;
 
-class Node{
+class Node
+{
 public:
     int data;
     Node* left;
@@ -29,25 +30,25 @@ public:
     }
     void insert_node(Node* root, Node* Newnode){
         if(Newnode->data < root->data){
-            if(root->left==NULL || root->l_thread ==true){
+            if(root->left==NULL || root->l_thread ==false){
                 Newnode->left=root->left;           //copy
                 Newnode->l_thread=root->l_thread;   //copy
                 Newnode->right=root;
                 Newnode->r_thread=true;
                 root->left=Newnode;
-                root->l_thread=false;
+                root->l_thread=true;
             }
             else
                 insert_node(root->left,Newnode);
         }
         else{
-            if(root->right==NULL || root->r_thread ==true){
+            if(root->right==NULL || root->r_thread ==false){
                 Newnode->right= root->right;       //copy
                 Newnode->r_thread=root->r_thread;  //copy
                 Newnode->left=root;
                 Newnode->l_thread=true;
                 root->right=Newnode;
-                root->r_thread=false;
+                root->r_thread=true;
 
             }
             else

@@ -11,8 +11,15 @@ using namespace std;
  
 class Node
 {
-    string data="";
-    Node *down=NULL,*right=NULL;
+    string data;
+    Node *down;
+    Node *right;
+    Node()
+    {
+        data="";
+        down=NULL;
+        right=NULL;
+    }
 friend class Graph;
 };
  
@@ -26,20 +33,29 @@ class Graph
     void Create()
     {
         cout<<"Enter number of vertices:";
-        ll a;cin>>tot;cout<<endl;a=tot;
+        ll a;
+        cin>>tot;
+        cout<<endl;
+        a=tot;
         Node *temp=head;
         while(a--)
         {
-            string str;ll b;
+            string str;
+            ll b;
             cout<<"Enter name of city and number of connected cities: ";
-            cin>>str>>b;cout<<endl;
+            cin>>str>>b;
+            cout<<endl;
             Node *k=new Node;
             k->data=str;
             temp->down=k;
-            temp=k;Node *p=k;
+            temp=k;
+            Node *p=k;
             while(b--)
             {
-                cout<<"Enter connected city: ";string hk;cin>>hk;cout<<endl;
+                cout<<"Enter connected city: ";
+                string hk;
+                cin>>hk;
+                cout<<endl;
                 Node *New=new Node;
                 New->data=hk;
                 temp->right=New;
