@@ -156,5 +156,4 @@ int main()
     op.swapSubtrees(root);
     op.inorder(root);
     cout<<endl;
-    cout<<endl;
 }
