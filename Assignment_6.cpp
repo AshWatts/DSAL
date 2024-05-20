@@ -174,4 +174,5 @@ int main()
     cout<<"BFS : ";
     g.BFS();
     cout<<endl;
+    cout<<endl;
 }
